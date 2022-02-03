@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_QCOM_RB5_PATH/package/rb5-firmware/Config.in"

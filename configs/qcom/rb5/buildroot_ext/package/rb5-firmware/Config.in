@@ -1,0 +1,7 @@
+config BR2_PACKAGE_RB5_FIRMWARE
+	bool "rb5-firmware"
+	help
+	  This package provides binary firmware files (closed blobs)
+	  for the rb5 development kit.
+
+	  http://releases.linaro.org/96boards/rb5/qualcomm/firmware/
