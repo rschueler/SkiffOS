@@ -14,7 +14,7 @@ BR2_KERNEL_HEADERS_AS_KERNEL=y
 # BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_15=y
 
 # skiff-rockpro64-5.16.y-2
-BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/skiffos/linux/archive/8e2efcaf850036f45552e2a4a9066306b8fb60de/linux-skiff-rockpro64-5.16.18-r2.tar.gz"
+BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/skiffos/linux/archive/db4ce3c871f3dba180b248f3024493cc34152e/linux-skiff-rockpro64-5.16.18-r3.tar.gz"
 BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_16=y
 
 BR2_LINUX_KERNEL_DEFCONFIG="rockchip_linux"
