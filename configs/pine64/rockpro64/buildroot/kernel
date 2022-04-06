@@ -6,8 +6,12 @@ BR2_KERNEL_HEADERS_AS_KERNEL=y
 # BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_13=y
 
 # skiff-rockpro64-5.13.19
-BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/skiffos/linux/archive/d8dc95442653764d4bf47b7e51fdd3453f2a89fd/linux-skiff-rockpro64-5.13.19-r1.tar.gz"
-BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_13=y
+# BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/skiffos/linux/archive/d8dc95442653764d4bf47b7e51fdd3453f2a89fd/linux-skiff-rockpro64-5.13.19-r1.tar.gz"
+# BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_13=y
+
+# skiff-rockpro64-5.15.y
+BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/skiffos/linux/archive/aaefd5f902f8576248b1688211e00800fffee771/linux-skiff-rockpro64-5.15.32-r1.tar.gz"
+BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_15=y
 
 BR2_LINUX_KERNEL_DEFCONFIG="rockchip_linux"
 BR2_LINUX_KERNEL_DTS_SUPPORT=y
