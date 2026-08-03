@@ -30,6 +30,15 @@ CONFIG_IP_NF_MANGLE=y
 CONFIG_IP_NF_TARGET_REDIRECT=y
 CONFIG_IP_NF_RAW=y
 
+# ip6tables raw table — Docker's bridge driver sets up an IPv6 "DIRECT
+# ACCESS FILTERING" DROP rule in the raw/PREROUTING table when an IPv6
+# network is created (even IPv4-only containers trigger this if any docker
+# network ends up with an IPv6 subnet). Missing this produces:
+# "failed to create endpoint ...: Unable to enable DIRECT ACCESS FILTERING
+#  - DROP rule: ... ip6tables v1.8.11: can't initialize ip6tables table
+#  'raw': Table does not exist". Found 2026-07-08 (bpi, portainer/agent).
+CONFIG_IP6_NF_RAW=y
+
 # Netfilter connection tracking
 CONFIG_NF_CONNTRACK=y
 CONFIG_NF_CONNTRACK_FTP=y
