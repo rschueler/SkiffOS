@@ -54,7 +54,15 @@ if [ -z "${DISABLE_ZRAM}" ] && ! (echo "${SWAP_LIST}" | grep -q "/dev/zram0"); t
         sleep 1
     done
     swapoff /dev/zram0 2>/dev/null || true
-    mkswap /dev/zram0 || true
+    # Sizing zram0 is a capacity change, and udev answers it with a second
+    # probe that opens the device again. mkswap and swapon open it exclusively,
+    # so they hit the same race a second time:
+    #
+    #   mkswap: cannot open /dev/zram0: Device or resource busy
+    #   swapon: cannot open /dev/zram0: Device or resource busy
+    #
+    # Settle again and retry the pair instead of giving up on the first EBUSY.
+    #
     # Priority must be positive. swapon(8) only sets SWAP_FLAG_PREFER when the
     # value is >= 0 (util-linux sys-utils/swapon.c: `if (priority >= 0)`), so a
     # negative -p is dropped without an error and the kernel falls back to
@@ -62,11 +70,20 @@ if [ -z "${DISABLE_ZRAM}" ] && ! (echo "${SWAP_LIST}" | grep -q "/dev/zram0"); t
     # -1). Priorities then follow activation order alone, and whenever zram came
     # up after the swapfile the disk ended up ABOVE zram -- the exact opposite
     # of what this script intends.
-    if ! swapon -p 100 /dev/zram0 ; then
-        echo "Failed to enable zram0 swap, continuing..."
-    else
-        echo "ZRAM enabled with size ${ZRAM_SIZE}."
-    fi
+    zram_tries=0
+    while :; do
+        command -v udevadm >/dev/null 2>&1 && udevadm settle --timeout=10 || true
+        if mkswap /dev/zram0 >/dev/null && swapon -p 100 /dev/zram0; then
+            echo "ZRAM enabled with size ${ZRAM_SIZE}."
+            break
+        fi
+        zram_tries=$((zram_tries + 1))
+        if [ "${zram_tries}" -ge 5 ]; then
+            echo "Failed to enable zram0 swap after ${zram_tries} tries, continuing..."
+            break
+        fi
+        sleep 1
+    done
 fi
 
 # Swap file, in case we run out of RAM.
