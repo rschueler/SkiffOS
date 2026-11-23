@@ -314,7 +314,7 @@ mv $BUILDROOT_DIR/.config $SKIFF_FINAL_CONFIG_DIR/final/buildroot
 ln -fs $SKIFF_FINAL_CONFIG_DIR/final/buildroot $BUILDROOT_DIR/.config
 mkdir -p $BUILDROOT_DIR/build
 cp $SKIFF_FINAL_CONFIG_DIR/final/buildroot $configured.config
-(cd $BUILDROOT_DIR && make -s show-info) > $configured-show-info.json
+(cd $BUILDROOT_DIR && make -s --no-print-directory show-info) > $configured-show-info.json
 
 # Kconfig silently drops a requested option whose dependencies the target
 # cannot meet, such as core/nixos on a 32-bit ARM board. Name each option
